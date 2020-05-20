@@ -18,7 +18,7 @@ sLinear = [[0 for x in range(cols)] for y in range(rows)]
 sNonLinear = [[0 for x in range(cols)] for y in range(rows)]
 boxcarSmoothingFilter = [[0 for x in range(filterColmns)] for y in range(filterRows)]
 medianFilter = [[0 for x in range(filterColmns)] for y in range(filterRows)]
-boxcarSum, boxcarMul  = (0.0, 0.0)
+boxcarSum = 0.0
 sliceData = [] 
 sortedArray = []
 middleIndex  = 0
@@ -119,17 +119,15 @@ plt.show()
 # e) Different transformation end.
 
 # f) 11x11 boxcar smoothing filter start.
-# Takes 2 to 3 mins to calculate.
 for ro in range(filterRows):
     for co in range(filterColmns):
         rowEnd = (ro + kernelRows)
         columnEnd = (co + kernelColmns)
         for p in dataSet[ro:rowEnd, co:columnEnd]:
-            for q in p:
-                boxcarMul = ((1 / (kernelRows * kernelColmns)) * q)
-                boxcarSum = boxcarSum + boxcarMul       
+            for q in p:                
+                boxcarSum = boxcarSum + ((1 / (kernelRows * kernelColmns)) * q)       
         boxcarSmoothingFilter[ro][co] = int(round(boxcarSum))
-        boxcarSum, boxcarMul = (0.0, 0.0)
+        boxcarSum = 0.0
 boxcar1d = np.asarray(boxcarSmoothingFilter).flatten()         
 minBoxcar = min(boxcar1d)
 maxBoxcar = max(boxcar1d)        
@@ -146,12 +144,14 @@ plt.show()
 # f) 11x11 boxcar smoothing filter end.
 
 # g) 11x11 median filter start.
-def BubbleSort(li):
-    length = len(li)    
-    for i in range(length-1):
-        for j in range(0,length-i-1):
-            if li[j] > li[j+1]:
-                li[j], li[j+1] = li[j+1], li[j]
+def Sort(li):
+    for w in range(1,len(li)):
+        key = li[w]
+        z = w - 1
+        while z >= 0 and key < li[z]:
+            li[z+1] = li[z]
+            z = z - 1
+        li[z+1] = key
     return li
 
 for x in range(filterRows):
@@ -161,7 +161,7 @@ for x in range(filterRows):
         for arrayList in dataSet[x:rEnd, y:cEnd]:
             for item in arrayList:
                 sliceData.append(item)
-        sortedArray = BubbleSort(sliceData)        
+        sortedArray = Sort(sliceData)        
         middleIndex = len(sortedArray) // 2                
         medianFilter[x][y] = int(round(sortedArray[middleIndex]))
         sliceData = []
