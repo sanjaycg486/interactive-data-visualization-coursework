@@ -22,18 +22,23 @@ boxcarSum, boxcarMul  = (0.0, 0.0)
 sliceData = [] 
 sortedArray = []
 middleIndex  = 0
+intensity, low , medium, heigh = ('Intensity', 'Low', 'Medium', 'Heigh')
 
 # Read and create 2D-array from data in a binary file.
 dataSet = np.fromfile("slice150.raw", dtype=np.uint16).reshape(rows, cols)
 
 # Create 1D array for future use.
 data = dataSet.flatten()
+rmin = min(data)
+rmax = max(data)
 
 # Display raw input start.
-img1 = plt.imshow(dataSet,aspect='equal',cmap=cm.get_cmap(name='magma'))
+img1 = plt.imshow(dataSet,aspect='equal', cmap=cm.get_cmap(name='magma'), vmin= rmin, vmax= rmax)
 ax1 = plt.gca()
 cb1 = plt.colorbar(img1,orientation='vertical', ax=ax1)
-cb1.set_label('Intensity')
+cb1.set_label(intensity)
+cb1.set_ticks([rmin, (rmax / 2), rmax])
+cb1.set_ticklabels([low, medium, heigh])
 plt.title('150th slice of a CT angiographic scan data.')
 plt.axis('off')
 plt.savefig('Slice150.png')
@@ -58,8 +63,8 @@ print('Mean = ', mean)
 
 # b) Calculate Variance value start.
 for li in dataSet:
-    for item in li:
-        cal = (item - mean)
+    for it in li:
+        cal = (it - mean)
         varianceSum = varianceSum + (cal * cal)
 variance = round((varianceSum / (rows * cols)),2)
 print('Variance = ', variance)
@@ -75,16 +80,18 @@ plt.show()
 # c) Histogram end.
 
 # d) Linear transformation Start.
-rmin = min(data)
-rmax = max(data)
 for r in range(rows):
     for c in range(cols):
         sLinear[r][c] = int(round(((dataSet[r][c] - rmin) / (rmax - rmin)) * smax))
-# print(max(np.asarray(sLinear).flatten()))             
-img2 = plt.imshow(sLinear, aspect= 'equal', cmap= cm.get_cmap(name='magma'))
+linear1d = np.asarray(sLinear).flatten()        
+minLinear = min(linear1d)
+maxLinear = max(linear1d)             
+img2 = plt.imshow(sLinear, aspect= 'equal', cmap= cm.get_cmap(name='magma'), vmin= minLinear, vmax= maxLinear)
 ax2 = plt.gca()
 cb2 = plt.colorbar(img2,orientation='vertical', ax=ax2)
-cb2.set_label('Intensity')
+cb2.set_label(intensity)
+cb2.set_ticks([minLinear, (maxLinear / 2), maxLinear])
+cb2.set_ticklabels([low, medium, heigh])
 plt.title('Linear Transformation of 2D Data set in range between 0 to 255.')
 plt.axis('off')
 plt.savefig('LinearTransformation.png')
@@ -96,10 +103,15 @@ constant = smax / log(rmax + 1, 2)
 for m in range(rows):
     for n in range(cols):
         sNonLinear[m][n] = int(round(constant * (log(dataSet[m][n] + 1, 2))))
-img3 = plt.imshow(sNonLinear, aspect= 'equal', cmap= cm.get_cmap(name='magma'))
+nonLinear1d = np.asarray(sNonLinear).flatten()         
+minNonLinear = min(nonLinear1d)
+maxNonLinear = max(nonLinear1d)        
+img3 = plt.imshow(sNonLinear, aspect= 'equal', cmap= cm.get_cmap(name='magma'), vmin= minNonLinear, vmax= maxNonLinear)
 ax3 = plt.gca()
 cb3 = plt.colorbar(img3, orientation= 'vertical', ax= ax3)
-cb3.set_label('Intensity')
+cb3.set_label(intensity)
+cb3.set_ticks([minNonLinear, (maxNonLinear / 2), maxNonLinear])
+cb3.set_ticklabels([low, medium, heigh])
 plt.title('Non-Linear Transformation of 2D Data set in range between 0 to 255.')
 plt.axis('off')
 plt.savefig('Non-LinearTransformation.png')
@@ -112,16 +124,21 @@ for ro in range(filterRows):
     for co in range(filterColmns):
         rowEnd = (ro + kernelRows)
         columnEnd = (co + kernelColmns)
-        for arrayList in dataSet[ro:rowEnd, co:columnEnd]:
-            for item in arrayList:
-                boxcarMul = ((1 / (kernelRows * kernelColmns)) * item)
+        for p in dataSet[ro:rowEnd, co:columnEnd]:
+            for q in p:
+                boxcarMul = ((1 / (kernelRows * kernelColmns)) * q)
                 boxcarSum = boxcarSum + boxcarMul       
         boxcarSmoothingFilter[ro][co] = int(round(boxcarSum))
         boxcarSum, boxcarMul = (0.0, 0.0)
-img4 = plt.imshow(boxcarSmoothingFilter, aspect= 'equal', cmap= cm.get_cmap(name='magma'))
+boxcar1d = np.asarray(boxcarSmoothingFilter).flatten()         
+minBoxcar = min(boxcar1d)
+maxBoxcar = max(boxcar1d)        
+img4 = plt.imshow(boxcarSmoothingFilter, aspect= 'equal', cmap= cm.get_cmap(name='magma'), vmin= minBoxcar, vmax= maxBoxcar)
 ax4 = plt.gca()
 cb4 = plt.colorbar(img4, orientation= 'vertical', ax= ax4)
-cb4.set_label('Intensity')
+cb4.set_label(intensity)
+cb4.set_ticks([minBoxcar, (maxBoxcar / 2), maxBoxcar])
+cb4.set_ticklabels([low, medium, heigh])
 plt.title('An 11x11 boxcar smoothing filter on the 2D data set.')
 plt.axis('off')
 plt.savefig('BoxcarSmoothingFilter.png')
@@ -137,23 +154,28 @@ def BubbleSort(li):
                 li[j], li[j+1] = li[j+1], li[j]
     return li
 
-for r in range(filterRows):
-    for c in range(filterColmns):
-        rEnd = (r + kernelRows)
-        cEnd = (c + kernelColmns)
-        for arrayList in dataSet[r:rEnd, c:cEnd]:
+for x in range(filterRows):
+    for y in range(filterColmns):
+        rEnd = (x + kernelRows)
+        cEnd = (y + kernelColmns)
+        for arrayList in dataSet[x:rEnd, y:cEnd]:
             for item in arrayList:
                 sliceData.append(item)
         sortedArray = BubbleSort(sliceData)        
         middleIndex = len(sortedArray) // 2                
-        medianFilter[r][c] = int(round(sortedArray[middleIndex]))
+        medianFilter[x][y] = int(round(sortedArray[middleIndex]))
         sliceData = []
         sortedArray = []
         middleIndex = 0
-img5 = plt.imshow(medianFilter, aspect= 'equal', cmap= cm.get_cmap(name='magma'))
+Median1d = np.asarray(medianFilter).flatten()
+minMedian = min(Median1d)
+maxMedian = max(Median1d)
+img5 = plt.imshow(medianFilter, aspect= 'equal', cmap= cm.get_cmap(name='magma'), vmin= minMedian, vmax= maxMedian)
 ax5 = plt.gca()
 cb5 = plt.colorbar(img5, orientation= 'vertical', ax= ax5)
-cb5.set_label('Intensity')
+cb5.set_label(intensity)
+cb5.set_ticks([minMedian, (maxMedian / 2), maxMedian])
+cb5.set_ticklabels([low, medium, heigh])
 plt.title('An 11x11 Median filter on the 2D data set.')
 plt.axis('off')
 plt.savefig('MedianFilter.png')
