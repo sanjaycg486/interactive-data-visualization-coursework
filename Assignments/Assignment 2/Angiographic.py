@@ -1,5 +1,6 @@
 from __future__ import print_function
 import numpy as np
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 from PIL import Image
@@ -18,7 +19,9 @@ sNonLinear = [[0 for x in range(cols)] for y in range(rows)]
 boxcarSmoothingFilter = [[0 for x in range(filterColmns)] for y in range(filterRows)]
 medianFilter = [[0 for x in range(filterColmns)] for y in range(filterRows)]
 boxcarSum, boxcarMul  = (0.0, 0.0)
-sliceData, sortedArray = ([], [])
+sliceData = [] 
+sortedArray = []
+middleIndex  = 0
 
 # Read and create 2D-array from data in a binary file.
 dataSet = np.fromfile("slice150.raw", dtype=np.uint16).reshape(rows, cols)
@@ -26,8 +29,19 @@ dataSet = np.fromfile("slice150.raw", dtype=np.uint16).reshape(rows, cols)
 # Create 1D array for future use.
 data = dataSet.flatten()
 
+# Display raw input start.
+img1 = plt.imshow(dataSet,aspect='equal',cmap=cm.get_cmap(name='magma'))
+ax1 = plt.gca()
+cb1 = plt.colorbar(img1,orientation='vertical', ax=ax1)
+cb1.set_label('Intensity')
+plt.title('150th slice of a CT angiographic scan data.')
+plt.axis('off')
+plt.savefig('Slice150.png')
+plt.show()
+# Display raw input end.
+
 # a) Profile line Start.
-plt.plot(dataSet[255])  #Line 256th
+plt.plot(dataSet[255],'tab:green')  #Line 256th
 plt.title("256th Profile line of data set.")
 plt.xlabel('x-axis')
 plt.ylabel('y-axis')
@@ -52,7 +66,7 @@ print('Variance = ', variance)
 # b) Calculate Variance value end.
 
 # c) Histogram start.
-plt.hist(data,bins=512,log=True,color='c')
+plt.hist(data, bins=512, log=True, color='c')
 plt.title('Histogram of 2D data set.')
 plt.xlabel('x-axis')
 plt.ylabel('log scale')
@@ -66,11 +80,13 @@ rmax = max(data)
 for r in range(rows):
     for c in range(cols):
         sLinear[r][c] = int(round(((dataSet[r][c] - rmin) / (rmax - rmin)) * smax))
-plt.imshow(sLinear,cmap='gray')
+# print(max(np.asarray(sLinear).flatten()))             
+img2 = plt.imshow(sLinear, aspect= 'equal', cmap= cm.get_cmap(name='magma'))
+ax2 = plt.gca()
+cb2 = plt.colorbar(img2,orientation='vertical', ax=ax2)
+cb2.set_label('Intensity')
 plt.title('Linear Transformation of 2D Data set in range between 0 to 255.')
-ax = plt.gca()
-ax.axes.get_xaxis().set_visible(False)
-ax.axes.get_yaxis().set_visible(False)
+plt.axis('off')
 plt.savefig('LinearTransformation.png')
 plt.show()
 # d) Linear transformation End.
@@ -80,16 +96,18 @@ constant = smax / log(rmax + 1, 2)
 for m in range(rows):
     for n in range(cols):
         sNonLinear[m][n] = int(round(constant * (log(dataSet[m][n] + 1, 2))))
-plt.imshow(sNonLinear,cmap='gray')
+img3 = plt.imshow(sNonLinear, aspect= 'equal', cmap= cm.get_cmap(name='magma'))
+ax3 = plt.gca()
+cb3 = plt.colorbar(img3, orientation= 'vertical', ax= ax3)
+cb3.set_label('Intensity')
 plt.title('Non-Linear Transformation of 2D Data set in range between 0 to 255.')
-ax = plt.gca()
-ax.axes.get_xaxis().set_visible(False)
-ax.axes.get_yaxis().set_visible(False)
+plt.axis('off')
 plt.savefig('Non-LinearTransformation.png')
 plt.show()
 # e) Different transformation end.
 
 # f) 11x11 boxcar smoothing filter start.
+# Takes 2 to 3 mins to calculate.
 for ro in range(filterRows):
     for co in range(filterColmns):
         rowEnd = (ro + kernelRows)
@@ -100,16 +118,17 @@ for ro in range(filterRows):
                 boxcarSum = boxcarSum + boxcarMul       
         boxcarSmoothingFilter[ro][co] = int(round(boxcarSum))
         boxcarSum, boxcarMul = (0.0, 0.0)
-plt.imshow(boxcarSmoothingFilter,cmap='gray')
+img4 = plt.imshow(boxcarSmoothingFilter, aspect= 'equal', cmap= cm.get_cmap(name='magma'))
+ax4 = plt.gca()
+cb4 = plt.colorbar(img4, orientation= 'vertical', ax= ax4)
+cb4.set_label('Intensity')
 plt.title('An 11x11 boxcar smoothing filter on the 2D data set.')
-ax = plt.gca()
-ax.axes.get_xaxis().set_visible(False)
-ax.axes.get_yaxis().set_visible(False)
+plt.axis('off')
 plt.savefig('BoxcarSmoothingFilter.png')
 plt.show()
 # f) 11x11 boxcar smoothing filter end.
 
-# g) 11x11 median filter start
+# g) 11x11 median filter start.
 def BubbleSort(li):
     length = len(li)    
     for i in range(length-1):
@@ -128,12 +147,15 @@ for r in range(filterRows):
         sortedArray = BubbleSort(sliceData)        
         middleIndex = len(sortedArray) // 2                
         medianFilter[r][c] = int(round(sortedArray[middleIndex]))
-        sliceData = [], sortedArray = [], middleItem = 0
-plt.imshow(medianFilter,cmap='gray')
+        sliceData = []
+        sortedArray = []
+        middleIndex = 0
+img5 = plt.imshow(medianFilter, aspect= 'equal', cmap= cm.get_cmap(name='magma'))
+ax5 = plt.gca()
+cb5 = plt.colorbar(img5, orientation= 'vertical', ax= ax5)
+cb5.set_label('Intensity')
 plt.title('An 11x11 Median filter on the 2D data set.')
-ax = plt.gca()
-ax.axes.get_xaxis().set_visible(False)
-ax.axes.get_yaxis().set_visible(False)
+plt.axis('off')
 plt.savefig('MedianFilter.png')
 plt.show()
 # g) 11x11 median filter end
