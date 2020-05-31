@@ -32,6 +32,12 @@ def readDataFromFile(filePath):
             arr.append((float(item)))
     return arr
 
+def findAbsoluteOccurenceOfValue(r_arr, oneD_Band):
+    result = []
+    r_arr_length = len(r_arr)        
+    for i in range(r_arr_length):
+        result.append(oneD_Band.count(r_arr[i]))
+    return result
 # with open("./orion/i170b2h0_t0.txt","r") as rf2:
     # lineData = rf2.readlines()
 # 
@@ -53,9 +59,9 @@ band3_1d = readDataFromFile("./orion/i170b3h0_t0.txt")
 band3_2d = np.asarray(band3_1d).reshape(rows,cols)
 band4_1d = readDataFromFile("./orion/i170b4h0_t0.txt")
 band4_2d = np.asarray(band4_1d).reshape(rows,cols)
-plt.imshow(band2_2d)
-plt.savefig("Band2.png")
-plt.show()
+# plt.imshow(band1_2d)
+# plt.savefig("Band2.png")
+# plt.show()
 # print(band2_2d)
 # print(len(band2_2d))
 # Read the band2 data from fle end.
@@ -88,10 +94,11 @@ print("Varience value = ",varianceValue)
 # Profile line through the Max. value of band2 data end.
 
 # Display Histogram of band2 Data start.
-# plt.hist(band2_1d, bins= 500,log=True, color='c')
+# rlist = np.unique(band2_1d)
+# plt.plot(rlist,findAbsoluteOccurenceOfValue(rlist, band2_1d))
 # plt.title('Histogram of band2 data set.')
-# plt.xlabel('Value on x-axis.')
-# plt.ylabel('Count on y-axis (log scale).')
+# plt.xlabel('Data value on x-axis.')
+# plt.ylabel('Count on y-axis.')
 # plt.savefig("Histogram.png")
 # plt.show()
 # Display Histogram of band2 Data End.
@@ -110,16 +117,17 @@ print("Varience value = ",varianceValue)
 # Rescale values to range between 0 and 255 using transformation end.
 
 # Histogram equalization on each of the four bands start.
-def findUniqueValue(arr):
-    # for i in range(len(arr)):
-    return np.unique(arr) # need to rework to avoid library.
+def findUniqueValue(oneD_Band):
+    result = []
+    oneD_Band_length = len(oneD_Band)
+    for i in range(oneD_Band_length):
+        if(oneD_Band[i] not in result):
+            result.append(oneD_Band[i])    
+    return result
 
-def findAbsoluteOccurenceOfValue(arr, x):
-    count = 0
-    for element in arr:
-        if (element == x):
-            count = count + 1
-    return count
+print(np.unique(band1_1d))
+print(len(np.unique(band1_1d)))
+print(findUniqueValue(band1_1d))
 
 def findRelativeOccurenceOfValue(x):
     return (x / (rows * cols))
