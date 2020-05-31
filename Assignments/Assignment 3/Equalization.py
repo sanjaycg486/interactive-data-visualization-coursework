@@ -4,19 +4,13 @@ from PIL import Image
 import matplotlib.cm as cm
 from math import log
 
-band1_1d, band2_1d, band3_1d, band4_1d = ([],[],[],[])
-splitData = []
 rows, cols = (500, 500)
 (smin, smax) = (0, 255)
 maximumValueList = [0 for x in range(rows)]
 Trans = [[0 for x in range(cols)] for y in range(rows)]
-CDF_band1, CDF_band2, CDF_band3, CDF_band4 = ([],[],[],[])
-rlist, absoluteOccurence, probabilityOccurence = ([], [], [])
-# print(maximumValueList)
-# print(len(maximumValueList))
 
 # Read the band data from file start.
-def readDataFromFile(filePath):
+def read_Data_From_File(filePath):
     arr, lineData, removeQuote, splitData = ([],[],[],[])
 
     with open(filePath,'r') as f:
@@ -32,32 +26,13 @@ def readDataFromFile(filePath):
             arr.append((float(item)))
     return arr
 
-def findAbsoluteOccurenceOfValue(r_arr, oneD_Band):
-    result = []
-    r_arr_length = len(r_arr)        
-    for i in range(r_arr_length):
-        result.append(oneD_Band.count(r_arr[i]))
-    return result
-# with open("./orion/i170b2h0_t0.txt","r") as rf2:
-    # lineData = rf2.readlines()
-# 
-# for line in reversed(lineData):
-    # removeQuote = line.replace('"',"")
-    # splitData.append(removeQuote.split(","))
-    # removeQuote = []
-# 
-# for li in splitData:
-    # for item in li:
-        # band2_1d.append((float(item)))
-# print(band2_1d)
-# print(len(band2_1d))
-band1_1d = readDataFromFile("./orion/i170b1h0_t0.txt")
+band1_1d = read_Data_From_File("./orion/i170b1h0_t0.txt")
 band1_2d = np.asarray(band1_1d).reshape(rows,cols)
-band2_1d = readDataFromFile("./orion/i170b2h0_t0.txt")
+band2_1d = read_Data_From_File("./orion/i170b2h0_t0.txt")
 band2_2d = np.asarray(band2_1d).reshape(rows,cols)
-band3_1d = readDataFromFile("./orion/i170b3h0_t0.txt")
+band3_1d = read_Data_From_File("./orion/i170b3h0_t0.txt")
 band3_2d = np.asarray(band3_1d).reshape(rows,cols)
-band4_1d = readDataFromFile("./orion/i170b4h0_t0.txt")
+band4_1d = read_Data_From_File("./orion/i170b4h0_t0.txt")
 band4_2d = np.asarray(band4_1d).reshape(rows,cols)
 # plt.imshow(band1_2d)
 # plt.savefig("Band2.png")
@@ -117,7 +92,7 @@ print("Varience value = ",varianceValue)
 # Rescale values to range between 0 and 255 using transformation end.
 
 # Histogram equalization on each of the four bands start.
-def findUniqueValue(oneD_Band):
+def find_Unique_Value(oneD_Band):    
     result = []
     oneD_Band_length = len(oneD_Band)
     for i in range(oneD_Band_length):
@@ -125,31 +100,91 @@ def findUniqueValue(oneD_Band):
             result.append(oneD_Band[i])    
     return result
 
-print(np.unique(band1_1d))
-print(len(np.unique(band1_1d)))
-print(findUniqueValue(band1_1d))
-
-def findRelativeOccurenceOfValue(x):
-    return (x / (rows * cols))
-
-def calculateCDFValue(parr,length):
-    CDF = []
-    for i in range(length):
-        if (i == 0):
-            CDF.append(parr[i] * smax)
-        else:
-            CDF.append(CDF[i-1] + parr[i])
-    return CDF
-
-def calculateCDFValueWithSmax(arr):
+def find_Absolute_Occurence_OfValue(r_arr, oneD_Band):
     result = []
-    for i in range(len(arr)):
-        result[i].append(round(arr[i] * smax))
+    r_arr_length = len(r_arr)        
+    for i in range(r_arr_length):
+        result.append(oneD_Band.count(r_arr[i]))
     return result
 
-# rlist = findUniqueValue(band2_1d)
-# print(len(band2_1d))
+def find_Relative_Occurence_OfValue(abs_arr):
+    result = []
+    abs_arr_length = len(abs_arr)
+    for i in range(abs_arr_length):
+        result.append((abs_arr[i] / (rows * cols)))
+    return result
 
-            
+def calculate_CDF_Value(rel_arr):
+    result = []
+    rel_arr_length = len(rel_arr)
+    for i in range(rel_arr_length):
+        if (i == 0):
+            result.append(rel_arr[i])
+        else:
+            result.append(result[i-1] + rel_arr[i])
+    return result
 
+def calculate_S_Value_WithSmax(cdf_arr):
+    result = []
+    cdf_arr_length = len(cdf_arr)
+    for i in range(cdf_arr_length):
+        result.append(int(round(cdf_arr[i] * smax)))
+    return result
+
+def HistogramEqualization(r_arr, s_arr, oneD_Band):
+    oneD_Band_length = len(oneD_Band)    
+    for i, item in enumerate(r_arr):
+        for j in range(oneD_Band_length):
+            if item == oneD_Band[j]:
+                oneD_Band[j] = s_arr[i]
+    return oneD_Band
+
+fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
+
+r_band1 = find_Unique_Value(band1_1d)
+absoluteOccurence_band1 = find_Absolute_Occurence_OfValue(r_band1, band1_1d)
+relativeOccurence_band1 = find_Relative_Occurence_OfValue(absoluteOccurence_band1)
+CDF_band1 = calculate_CDF_Value(relativeOccurence_band1)
+s_band1 = calculate_S_Value_WithSmax(CDF_band1)
+hist_equ_band1 = np.asarray(HistogramEqualization(r_band1, s_band1, band1_1d)).reshape(rows,cols)
+ax1.imshow(hist_equ_band1, aspect= 'equal', cmap= cm.get_cmap(name='gray'))
+ax1.set_title('Histogram Equalization of Band1.')
+ax1.axis('off')
+print('band1')
+
+r_band2 = find_Unique_Value(band2_1d)
+absoluteOccurence_band2 = find_Absolute_Occurence_OfValue(r_band2, band2_1d)
+relativeOccurence_band2 = find_Relative_Occurence_OfValue(absoluteOccurence_band2)
+CDF_band2 = calculate_CDF_Value(relativeOccurence_band2)
+s_band2 = calculate_S_Value_WithSmax(CDF_band2)
+hist_equ_band2 = np.asarray(HistogramEqualization(r_band2, s_band2, band2_1d)).reshape(rows,cols)
+ax2.imshow(hist_equ_band2, aspect= 'equal', cmap= cm.get_cmap(name='gray'))
+ax2.set_title('Histogram Equalization of Band2.')
+ax2.axis('off')
+print('band2')
+
+r_band3 = find_Unique_Value(band3_1d)
+absoluteOccurence_band3 = find_Absolute_Occurence_OfValue(r_band3, band3_1d)
+relativeOccurence_band3 = find_Relative_Occurence_OfValue(absoluteOccurence_band3)
+CDF_band3 = calculate_CDF_Value(relativeOccurence_band3)
+s_band3 = calculate_S_Value_WithSmax(CDF_band3)
+hist_equ_band3 = np.asarray(HistogramEqualization(r_band3, s_band3, band3_1d)).reshape(rows,cols)
+ax3.imshow(hist_equ_band3, aspect= 'equal', cmap= cm.get_cmap(name='gray'))
+ax3.set_title('Histogram Equalization of Band3.')
+ax3.axis('off')
+print('band3')
+
+r_band4 = find_Unique_Value(band4_1d)
+absoluteOccurence_band4 = find_Absolute_Occurence_OfValue(r_band4, band4_1d)
+relativeOccurence_band4 = find_Relative_Occurence_OfValue(absoluteOccurence_band4)
+CDF_band4 = calculate_CDF_Value(relativeOccurence_band4)
+s_band4 = calculate_S_Value_WithSmax(CDF_band4)
+hist_equ_band4 = np.asarray(HistogramEqualization(r_band4, s_band4, band4_1d)).reshape(rows,cols)
+ax4.imshow(hist_equ_band4, aspect= 'equal', cmap= cm.get_cmap(name='gray'))
+ax4.set_title('Histogram Equalization of Band4.')
+ax4.axis('off')
+print('band4')
+
+plt.savefig("HistogramEqualization.png")
+plt.show()
 # Histogram equalization on each of the four bands end.
