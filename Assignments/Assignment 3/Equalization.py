@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import matplotlib.cm as cm
 from math import log
+from collections import Counter
 
 rows, cols = (500, 500)
 (smin, smax) = (0, 255)
@@ -34,12 +35,7 @@ band3_1d = read_Data_From_File("./orion/i170b3h0_t0.txt")
 band3_2d = np.asarray(band3_1d).reshape(rows,cols)
 band4_1d = read_Data_From_File("./orion/i170b4h0_t0.txt")
 band4_2d = np.asarray(band4_1d).reshape(rows,cols)
-# plt.imshow(band1_2d)
-# plt.savefig("Band2.png")
-# plt.show()
-# print(band2_2d)
-# print(len(band2_2d))
-# Read the band2 data from fle end.
+# Read the band data from file end.
 
 # Calculate Max., Min., Mean and Varience value for Band2 start.
 maxValue = max(band2_1d)
@@ -69,24 +65,29 @@ print("Varience value = ",varianceValue)
 # Profile line through the Max. value of band2 data end.
 
 # Display Histogram of band2 Data start.
-# rlist = np.unique(band2_1d)
-# plt.plot(rlist,findAbsoluteOccurenceOfValue(rlist, band2_1d))
+# data = Counter(band2_1d)
+# plt.plot(list(data.keys()),list(data.values()))
 # plt.title('Histogram of band2 data set.')
-# plt.xlabel('Data value on x-axis.')
-# plt.ylabel('Count on y-axis.')
+# plt.xlabel('Data values on x-axis.')
+# plt.ylabel('Absolute Occurences on y-axis.')
 # plt.savefig("Histogram.png")
 # plt.show()
 # Display Histogram of band2 Data End.
 
 # Rescale values to range between 0 and 255 using transformation start.
-# constant = smax / log(maxValue + 1, 2)
+# constant = smax / (log(maxValue + 1, 2))
 # for m in range(rows):
     # for n in range(cols):
         # Trans[m][n] = (constant * (log(band2_2d[m][n] + 1, 2)))
-# plt.imshow(Trans, aspect= 'equal', cmap='gray')
-# plt.title('Transformation of band2 2D Data set in range between 0 to 255.')
-# ax1 = plt.gca()
-# ax1.xaxis.tick_top()
+# Trans_1d = np.asarray(Trans).flatten()
+# min_Trans = min(Trans_1d)
+# max_Trans = max(Trans_1d)
+# img = plt.imshow(Trans, aspect= 'equal', cmap= cm.get_cmap(name='magma'), vmin= min_Trans, vmax= max_Trans)
+# ax = plt.gca()
+# ax.xaxis.tick_top()
+# cb = plt.colorbar(img, orientation= 'vertical', ax= ax)
+# cb.set_ticks([min_Trans, max_Trans])
+# plt.title('Transformation of band2 2D Data set in range between 0 and 255.')
 # plt.savefig('Transformation.png')
 # plt.show()
 # Rescale values to range between 0 and 255 using transformation end.
@@ -139,52 +140,52 @@ def HistogramEqualization(r_arr, s_arr, oneD_Band):
                 oneD_Band[j] = s_arr[i]
     return oneD_Band
 
-fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
-
-r_band1 = find_Unique_Value(band1_1d)
-absoluteOccurence_band1 = find_Absolute_Occurence_OfValue(r_band1, band1_1d)
-relativeOccurence_band1 = find_Relative_Occurence_OfValue(absoluteOccurence_band1)
-CDF_band1 = calculate_CDF_Value(relativeOccurence_band1)
-s_band1 = calculate_S_Value_WithSmax(CDF_band1)
-hist_equ_band1 = np.asarray(HistogramEqualization(r_band1, s_band1, band1_1d)).reshape(rows,cols)
-ax1.imshow(hist_equ_band1, aspect= 'equal', cmap= cm.get_cmap(name='gray'))
-ax1.set_title('Histogram Equalization of Band1.')
-ax1.axis('off')
-print('band1')
-
-r_band2 = find_Unique_Value(band2_1d)
-absoluteOccurence_band2 = find_Absolute_Occurence_OfValue(r_band2, band2_1d)
-relativeOccurence_band2 = find_Relative_Occurence_OfValue(absoluteOccurence_band2)
-CDF_band2 = calculate_CDF_Value(relativeOccurence_band2)
-s_band2 = calculate_S_Value_WithSmax(CDF_band2)
-hist_equ_band2 = np.asarray(HistogramEqualization(r_band2, s_band2, band2_1d)).reshape(rows,cols)
-ax2.imshow(hist_equ_band2, aspect= 'equal', cmap= cm.get_cmap(name='gray'))
-ax2.set_title('Histogram Equalization of Band2.')
-ax2.axis('off')
-print('band2')
-
-r_band3 = find_Unique_Value(band3_1d)
-absoluteOccurence_band3 = find_Absolute_Occurence_OfValue(r_band3, band3_1d)
-relativeOccurence_band3 = find_Relative_Occurence_OfValue(absoluteOccurence_band3)
-CDF_band3 = calculate_CDF_Value(relativeOccurence_band3)
-s_band3 = calculate_S_Value_WithSmax(CDF_band3)
-hist_equ_band3 = np.asarray(HistogramEqualization(r_band3, s_band3, band3_1d)).reshape(rows,cols)
-ax3.imshow(hist_equ_band3, aspect= 'equal', cmap= cm.get_cmap(name='gray'))
-ax3.set_title('Histogram Equalization of Band3.')
-ax3.axis('off')
-print('band3')
-
-r_band4 = find_Unique_Value(band4_1d)
-absoluteOccurence_band4 = find_Absolute_Occurence_OfValue(r_band4, band4_1d)
-relativeOccurence_band4 = find_Relative_Occurence_OfValue(absoluteOccurence_band4)
-CDF_band4 = calculate_CDF_Value(relativeOccurence_band4)
-s_band4 = calculate_S_Value_WithSmax(CDF_band4)
-hist_equ_band4 = np.asarray(HistogramEqualization(r_band4, s_band4, band4_1d)).reshape(rows,cols)
-ax4.imshow(hist_equ_band4, aspect= 'equal', cmap= cm.get_cmap(name='gray'))
-ax4.set_title('Histogram Equalization of Band4.')
-ax4.axis('off')
-print('band4')
-
-plt.savefig("HistogramEqualization.png")
-plt.show()
+# fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
+# 
+# r_band1 = find_Unique_Value(band1_1d)
+# absoluteOccurence_band1 = find_Absolute_Occurence_OfValue(r_band1, band1_1d)
+# relativeOccurence_band1 = find_Relative_Occurence_OfValue(absoluteOccurence_band1)
+# CDF_band1 = calculate_CDF_Value(relativeOccurence_band1)
+# s_band1 = calculate_S_Value_WithSmax(CDF_band1)
+# hist_equ_band1 = np.asarray(HistogramEqualization(r_band1, s_band1, band1_1d)).reshape(rows,cols)
+# ax1.imshow(hist_equ_band1, aspect= 'equal', cmap= cm.get_cmap(name='gray'))
+# ax1.set_title('Histogram Equalization of Band1.')
+# ax1.axis('off')
+# print('band1')
+# 
+# r_band2 = find_Unique_Value(band2_1d)
+# absoluteOccurence_band2 = find_Absolute_Occurence_OfValue(r_band2, band2_1d)
+# relativeOccurence_band2 = find_Relative_Occurence_OfValue(absoluteOccurence_band2)
+# CDF_band2 = calculate_CDF_Value(relativeOccurence_band2)
+# s_band2 = calculate_S_Value_WithSmax(CDF_band2)
+# hist_equ_band2 = np.asarray(HistogramEqualization(r_band2, s_band2, band2_1d)).reshape(rows,cols)
+# ax2.imshow(hist_equ_band2, aspect= 'equal', cmap= cm.get_cmap(name='gray'))
+# ax2.set_title('Histogram Equalization of Band2.')
+# ax2.axis('off')
+# print('band2')
+# 
+# r_band3 = find_Unique_Value(band3_1d)
+# absoluteOccurence_band3 = find_Absolute_Occurence_OfValue(r_band3, band3_1d)
+# relativeOccurence_band3 = find_Relative_Occurence_OfValue(absoluteOccurence_band3)
+# CDF_band3 = calculate_CDF_Value(relativeOccurence_band3)
+# s_band3 = calculate_S_Value_WithSmax(CDF_band3)
+# hist_equ_band3 = np.asarray(HistogramEqualization(r_band3, s_band3, band3_1d)).reshape(rows,cols)
+# ax3.imshow(hist_equ_band3, aspect= 'equal', cmap= cm.get_cmap(name='gray'))
+# ax3.set_title('Histogram Equalization of Band3.')
+# ax3.axis('off')
+# print('band3')
+# 
+# r_band4 = find_Unique_Value(band4_1d)
+# absoluteOccurence_band4 = find_Absolute_Occurence_OfValue(r_band4, band4_1d)
+# relativeOccurence_band4 = find_Relative_Occurence_OfValue(absoluteOccurence_band4)
+# CDF_band4 = calculate_CDF_Value(relativeOccurence_band4)
+# s_band4 = calculate_S_Value_WithSmax(CDF_band4)
+# hist_equ_band4 = np.asarray(HistogramEqualization(r_band4, s_band4, band4_1d)).reshape(rows,cols)
+# ax4.imshow(hist_equ_band4, aspect= 'equal', cmap= cm.get_cmap(name='gray'))
+# ax4.set_title('Histogram Equalization of Band4.')
+# ax4.axis('off')
+# print('band4')
+# 
+# plt.savefig("HistogramEqualization.png")
+# plt.show()
 # Histogram equalization on each of the four bands end.
