@@ -132,26 +132,45 @@ def calculate_S_Value_WithSmax(cdf_arr):
         result.append(int(round(cdf_arr[i] * smax)))
     return result
 
-def HistogramEqualization(r_arr, s_arr, oneD_Band):
-    oneD_Band_length = len(oneD_Band)    
-    for i, item in enumerate(r_arr):
-        for j in range(oneD_Band_length):
-            if item == oneD_Band[j]:
-                oneD_Band[j] = s_arr[i]
-    return oneD_Band
+def HistogramEqualization(band_1d):
+    result, r_values, absolute_values, relative_values, CDF_values, s_values = ([], [], [], [], [], [])    
+    
+    result = Counter(band_1d)
+    r_values = list(result.keys())
+    absolute_values = list(result.values())
+    
+    absolute_values_length = len(absolute_values)
+    for i in range(absolute_values_length):
+        relative_values.append((absolute_values[i] / (rows * cols)))
+        if i == 0:            
+            CDF_values.append(relative_values[i])
+        else:
+            CDF_values.append(CDF_values[i-1] + relative_values[i])
+        s_values.append(CDF_values[i] * smax)
+    
+    print('Replacing start')
+    band_1d_length = len(band_1d)
+    for j, item in enumerate(r_values):
+        for k in range(band_1d_length):
+            if item == band_1d[k]:
+                band_1d[k] = s_values[j]
+    print(band_1d)
+    return band_1d
 
-# fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
-# 
+fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
+
 # r_band1 = find_Unique_Value(band1_1d)
 # absoluteOccurence_band1 = find_Absolute_Occurence_OfValue(r_band1, band1_1d)
 # relativeOccurence_band1 = find_Relative_Occurence_OfValue(absoluteOccurence_band1)
 # CDF_band1 = calculate_CDF_Value(relativeOccurence_band1)
 # s_band1 = calculate_S_Value_WithSmax(CDF_band1)
-# hist_equ_band1 = np.asarray(HistogramEqualization(r_band1, s_band1, band1_1d)).reshape(rows,cols)
-# ax1.imshow(hist_equ_band1, aspect= 'equal', cmap= cm.get_cmap(name='gray'))
-# ax1.set_title('Histogram Equalization of Band1.')
-# ax1.axis('off')
-# print('band1')
+hist_equ_band1 = np.asarray(HistogramEqualization(band2_1d)).reshape(rows, cols)
+ax1.imshow(hist_equ_band1, aspect= 'equal')
+ax1.set_title('Band1.')
+ax1.axis('off')
+print('band1')
+plt.savefig("HistogramEqualization.png")
+plt.show()
 # 
 # r_band2 = find_Unique_Value(band2_1d)
 # absoluteOccurence_band2 = find_Absolute_Occurence_OfValue(r_band2, band2_1d)
