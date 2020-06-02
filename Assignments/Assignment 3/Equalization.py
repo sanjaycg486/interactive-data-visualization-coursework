@@ -1,5 +1,3 @@
-from typing import List
-
 import numpy as np
 import matplotlib.pyplot as plt
 import math
@@ -9,7 +7,6 @@ rows, cols = (500, 500)
 maximumValueList = [0 for x in range(rows)]
 Trans = [[0 for x in range(cols)] for y in range(rows)]
 RGB_array = [[[0 for x in range(3)] for y in range(cols)] for z in range(rows)]
-print(RGB_array)
 
 
 # Read the band data from file start.
@@ -40,7 +37,7 @@ band4_1d = read_data_from_file("./orion/i170b4h0_t0.txt")
 band4_2d = np.asarray(band4_1d).reshape(rows, cols)
 # Read the band data from file end.
 
-# Calculate Max., Min., Mean and Variance value for Band2 start.
+# (a) Calculate Max., Min., Mean and Variance value for Band2 start.
 maxValue = max(band2_1d)
 print("Maximum value = ", maxValue)
 
@@ -52,24 +49,22 @@ print("Mean value = ", meanValue)
 
 varianceValue = np.var(band2_1d)
 print("Variance value = ", varianceValue)
-# Calculate Max., Min., Mean and Variance value for Band2 End.
+# (a) Calculate Max., Min., Mean and Variance value for Band2 End.
 
-# Profile line through the Max. value of band2 data start.
+# (b) Profile line through the Max. value of band2 data start.
 for i in range(rows):
     if max(band2_2d[i]) > max(maximumValueList):
         maximumValueList = []
         maximumValueList = band2_2d[i]
-# line = plt.figure(1)
 plt.plot(maximumValueList, 'tab:green')
 plt.title("Profile line through the line with the maximum value of Band2 2D data set.")
 plt.xlabel('x-axis.')
 plt.ylabel('y-axis.')
 plt.savefig("ProfileLine.png")
 plt.show()
-# Profile line through the Max. value of band2 data end.
+# (b) Profile line through the Max. value of band2 data end.
 
-# Display Histogram of band2 Data start.
-# hist = plt.figure(2)
+# (c) Display Histogram of band2 Data start.
 r_list, abs_occ_values = np.unique(band2_1d, return_counts=True)
 plt.plot(r_list, abs_occ_values)
 plt.title('Histogram of band2 data set.')
@@ -77,10 +72,9 @@ plt.xlabel('Data values on x-axis.')
 plt.ylabel('Absolute Occurrence on y-axis.')
 plt.savefig("Histogram.png")
 plt.show()
-# Display Histogram of band2 Data End.
+# (c) Display Histogram of band2 Data End.
 
-# Rescale values to range between 0 and 255 using transformation start.
-# tra = plt.figure(3)
+# (d) Rescale values to range between 0 and 255 using transformation start.
 constant = smax / (math.log(maxValue + 1, 2))
 for m in range(rows):
     for n in range(cols):
@@ -98,10 +92,10 @@ ax.xaxis.tick_top()
 plt.title('Transformation of band2 2D Data set in range between 0 and 255.')
 plt.savefig('Transformation.png')
 plt.show()
-# Rescale values to range between 0 and 255 using transformation end.
+# (d) Rescale values to range between 0 and 255 using transformation end.
 
 
-# Histogram equalization on each of the four bands start.                    
+# (e) Histogram equalization on each of the four bands start.
 def histogram_equalization(oned_band):
     r_values, absolute_values, relative_values, CDF_values, s_values = ([], [], [], [], [])
 
@@ -164,15 +158,16 @@ ax.xaxis.tick_top()
 plt.title('Histogram equalization of Band4.')
 plt.savefig("HistogramEqualization_Band4.png")
 plt.show()
-# Histogram equalization on each of the four bands end.
+# (e) Histogram equalization on each of the four bands end.
 
-# Combine Histo-equalized data set to an RGB-image (b4=r, b3=g, b1=b) start.
+# (f) Combine Histo-equalized data set to an RGB-image (b4=r, b3=g, b1=b) start.
 for i in range(rows):
     for j in range(cols):
         RGB_array[i][j][0] = hist_equ_band4[i][j]
         RGB_array[i][j][1] = hist_equ_band3[i][j]
         RGB_array[i][j][2] = hist_equ_band1[i][j]
 plt.imshow(np.uint8(RGB_array), aspect='equal')
+plt.colorbar()
 ax = plt.gca()
 ax.set_xticks([0, 100, 200, 300, 400, 500])
 ax.set_yticks([0, 100, 200, 300, 400, 500])
@@ -180,3 +175,4 @@ ax.xaxis.tick_top()
 plt.title('Combine Histo-equalized data set to an RGB-image.')
 plt.savefig("RGB_image.png")
 plt.show()
+# (f) Combine Histo-equalized data set to an RGB-image (b4=r, b3=g, b1=b) end.
