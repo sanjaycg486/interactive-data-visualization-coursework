@@ -5,3 +5,4 @@ data_set_url = 'https://raw.githubusercontent.com/owid/covid-19-data/master/publ
 covid19_data_frame = pd.read_csv(data_set_url)
 covid19_data_frame = covid19_data_frame.loc[covid19_data_frame['continent'] == 'Europe']
 print(covid19_data_frame)
+
