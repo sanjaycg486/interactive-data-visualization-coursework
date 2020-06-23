@@ -6,3 +6,4 @@ covid19_data_frame = pd.read_csv(data_set_url)
 covid19_data_frame = covid19_data_frame.loc[covid19_data_frame['continent'] == 'Europe']
 print(covid19_data_frame)
 print(covid19_data_frame.columns) #gives columns of the data frame
+
