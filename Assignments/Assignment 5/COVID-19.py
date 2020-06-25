@@ -43,8 +43,10 @@ color_dict = {countries_in_europe[index]: color_list[index]
 print(color_dict)
 
 fig1 = px.line(covid19_data_frame, x='date', y='stringency_index',
-               labels={'date': 'Date', 'stringency_index': 'Government Response Stringency Index 0 to 100 (100 = strictest response).','location': 'Europe countries',
-                       'total_cases': 'Total confirmed cases', 'total_deaths': 'Total deaths', 'new_cases': 'New confirmed cases', 'new_deaths': 'New deaths'},
+               labels={'date': 'Date', 'stringency_index': 'Government stringency index (0-100)',
+                       'location': 'European country', 'total_cases': 'Total confirmed cases',
+                       'total_deaths': 'Total deaths', 'new_cases': 'New confirmed cases',
+                       'new_deaths': 'New deaths'},
                color='location', color_discrete_map=color_dict,
                hover_data=['total_cases', 'total_deaths', 'new_cases', 'new_deaths'],
                title='Task 1: Line Graphs for Multivariate Data', height=700)
