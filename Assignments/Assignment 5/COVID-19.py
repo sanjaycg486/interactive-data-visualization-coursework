@@ -53,3 +53,34 @@ fig1 = px.line(covid19_data_frame, x='date', y='stringency_index',
 
 off.plot(fig1, filename='assignment5_plots/task_1_line_graph.html')
 # Task 1 from the concept paper End.
+
+# Task 3 from the concept paper start
+# Coded by Varun Nandkumar Golani
+
+recent_tests_data_frame = pd.DataFrame(columns=['location', 'total_tests', 'date'])
+# print(not covid19_data_frame.loc[
+#          (covid19_data_frame['location'] == 'Albania') & pd.notnull(covid19_data_frame['total_tests']),
+#          ['location', 'date', 'total_tests']].empty)
+
+for country in countries_in_europe:
+    country_recent_data = covid19_data_frame.loc[(covid19_data_frame['location'] == country)
+                                                 & pd.notnull(covid19_data_frame['total_tests']),
+                                                 ['location', 'total_tests', 'date']]
+    if not country_recent_data.empty:
+        # print(country_recent_data.iloc[[-1]])
+        recent_tests_data_frame = pd.concat([recent_tests_data_frame, country_recent_data.iloc[[-1]]])
+
+print(recent_tests_data_frame)
+print(recent_tests_data_frame['total_tests'].sum())
+
+fig3 = px.pie(recent_tests_data_frame, values='total_tests', names='location', title='Task 3: Pie Chart'
+              , color='location', color_discrete_map=color_dict, hover_data=['date']
+              , labels={'location': 'European country', 'date': 'Recent data available date',
+                        'total_tests': 'Total tests'})
+fig3.update_traces(textposition='inside', textinfo='percent+label',
+                   hovertemplate='European country: %{label} <br>Total tests: %{value} ' +
+                                 '</br>Recent data available date: %{customdata}')
+
+off.plot(fig3, filename='assignment5_plots/task_3_pie_chart.html')
+
+# Task 3 from the concept paper end
