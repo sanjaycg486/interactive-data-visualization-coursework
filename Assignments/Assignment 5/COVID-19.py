@@ -42,7 +42,7 @@ countries_in_europe = covid19_data_frame['location'].unique().tolist()
 color_list = px.colors.qualitative.Alphabet + px.colors.qualitative.Dark24 + px.colors.qualitative.Dark2
 color_dict = {countries_in_europe[index]: color_list[index]
               for index in range(len(countries_in_europe))}
-print(color_dict)
+# print(color_dict)
 
 fig1 = px.line(covid19_data_frame, x='date', y='stringency_index',
                labels={'date': 'Date', 'stringency_index': 'Government stringency index (0-100)',
@@ -153,8 +153,8 @@ for country in countries_in_europe:
     if not country_recent_data.empty:
         recent_tests_data_frame = pd.concat([recent_tests_data_frame, country_recent_data.iloc[[-1]]])
 
-print(recent_tests_data_frame)
-print(recent_tests_data_frame['total_tests'].sum())
+# print(recent_tests_data_frame)
+# print(recent_tests_data_frame['total_tests'].sum())
 
 fig3 = px.pie(recent_tests_data_frame, values='total_tests', names='location', title='Task 3: Pie Chart'
               , color='location', color_discrete_map=color_dict, hover_data=['date']
@@ -175,3 +175,52 @@ app=dash.Dash()
 app.layout=html.Div([dcc.Graph(figure=fig1),dcc.Graph(figure=fig3)])
 app.run_server(debug=True,use_reloader=False)
 # Task 3 from the concept paper end
+
+# Task 4 from the concept paper Start.
+# Author-  Sanjay Gupta
+
+iso_code_list = covid19_data_frame["iso_code"].unique().tolist()
+iso_code_color_dict = {iso_code_list[index]: color_list[index] for index in range(len(iso_code_list))}
+# print(iso_code_color_dict)
+
+
+def calculate_covid19_death_rate(data_frame):
+    death_rate_data = []
+    for item in range(len(data_frame)):
+        death_rate_data.append(round(((data_frame["total_deaths"].iloc[[item]] / data_frame["total_cases"].iloc[[item]]) * 100), 2))
+    return death_rate_data
+
+
+def select_recent_data_for_each_countries(data_frame, code_list):
+
+    death_rate_data_frame = pd.DataFrame(columns=['iso_code', 'location', 'date', 'total_cases',
+                                                  'new_cases', 'total_deaths', 'new_deaths'])
+    for iso_code in code_list:
+        recent_data_of_countries = data_frame.loc[(data_frame['iso_code'] == iso_code)
+                                                  & pd.notnull(data_frame['total_deaths'])
+                                                  & pd.notnull(data_frame['total_cases']),
+                                                  ['iso_code', 'location', 'date', 'total_cases',
+                                                   'new_cases', 'total_deaths', 'new_deaths']]
+
+        if not recent_data_of_countries.empty:
+            death_rate_data_frame = pd.concat([death_rate_data_frame, recent_data_of_countries.iloc[[-1]]])
+
+    death_rate_data_frame['covid19_death_rate'] = calculate_covid19_death_rate(death_rate_data_frame)
+
+    return death_rate_data_frame
+
+
+recent_death_rate_data_frame = select_recent_data_for_each_countries(covid19_data_frame, iso_code_list)
+# print(recent_death_rate_data_frame)
+# print(len(recent_death_rate_data_frame))
+
+fig4 = px.choropleth(recent_death_rate_data_frame, color='iso_code', locations='iso_code',
+                     hover_name='location', hover_data=['date', 'covid19_death_rate','total_deaths', 'total_cases'],
+                     labels={'iso_code': 'ISO code', 'date': 'Date', 'location': 'European country',
+                             'total_cases': 'Total confirmed cases', 'total_deaths': 'Total deaths',
+                             'covid19_death_rate': 'COVID-19 Death rate(%)'},
+                     scope="europe", color_discrete_map=color_dict)
+fig4.update_geos(fitbounds="locations", lataxis_showgrid=True, lonaxis_showgrid=True)
+fig4.update_layout(height=700, title='Task 4: Choropleth map of Europe.')
+off.plot(fig4, filename='assignment5_plots/task_4_choropleth_map.html')
+# Task 4 from the concept paper End.
