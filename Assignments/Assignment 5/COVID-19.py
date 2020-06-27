@@ -35,7 +35,7 @@ fig1 = px.line(covid19_data_frame, x='date', y='stringency_index',
                        'new_deaths': 'New deaths'},
                color='location', color_discrete_map=color_dict,
                hover_data=['total_cases', 'total_deaths', 'new_cases', 'new_deaths'],
-               title='Task 1: Line Graphs for Multivariate Data', height=700)
+               title='Task 1: Line Graphs for Multivariate Data', height=800)
 # Task 1 from the concept paper End.
 
 # Task 2 from the concept paper start.
@@ -179,12 +179,23 @@ fig4 = px.choropleth(recent_death_rate_data_frame, color='iso_code', locations='
                              'covid19_death_rate': 'COVID-19 Death rate(%)'},
                      scope="europe", color_discrete_map=color_dict)
 fig4.update_geos(fitbounds="locations", lataxis_showgrid=True, lonaxis_showgrid=True)
-fig4.update_layout(height=700, title='Task 4: Choropleth map of Europe.')
+fig4.update_layout(height=800, title='Task 4: Choropleth map of Europe.')
 # Task 4 from the concept paper End.
 
 # Dash code start.
-app.layout = html.Div(children=[
-    html.H1(children='COVID-19 mini project for IDV.'),
+colors = {
+    'background': '#111111',
+    'text': '#7FDBFF'
+}
+
+app.layout = html.Div(style={'backgroundColor': colors['background']}, children=[
+    html.H1(
+        children='COVID-19 mini project for Interactive Data Visualization course.',
+        style={
+            'textAlign': 'center',
+            'color': colors['text']
+        }
+    ),
     dcc.Graph(id='line-graph', figure=fig1),
     dcc.Graph(id='parallel-coordinates', figure=fig2),
     dcc.Graph(id='pie-chart', figure=fig3),
