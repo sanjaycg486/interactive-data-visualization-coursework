@@ -1,10 +1,10 @@
 import pandas as pd
 import plotly.graph_objects as go
-import os
 import plotly.express as px
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+from dash.dependencies import Input, Output
 
 # Reading the csv data file via Github URL and filtering the data based on the continent 'Europe' start.
 data_set_url = 'https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv'
@@ -35,7 +35,7 @@ fig1 = px.line(covid19_data_frame, x='date', y='stringency_index',
                        'new_deaths': 'New deaths'},
                color='location', color_discrete_map=color_dict,
                hover_data=['total_cases', 'total_deaths', 'new_cases', 'new_deaths'],
-               title='Task 1: Line Graphs for Multivariate Data', height=800)
+               title='Task 1: Line Graphs for Multivariate Data', height=700)
 # Task 1 from the concept paper End.
 
 # Task 2 from the concept paper start.
@@ -99,7 +99,7 @@ fig2 = go.Figure(data=go.Parcoords(
     ])
 ), layout=go.Layout(
     autosize=True,
-    height=950,
+    height=800,
     hovermode='closest',
     margin=dict(l=170, r=85, t=75)))
 
@@ -130,7 +130,7 @@ for country in countries_in_europe:
 fig3 = px.pie(recent_tests_data_frame, values='total_tests', names='location', title='Task 3: Pie Chart.'
               , color='location', color_discrete_map=color_dict, hover_data=['date']
               , labels={'location': 'European country', 'date': 'Recent data available date',
-                        'total_tests': 'Total tests'}, height=800)
+                        'total_tests': 'Total tests'}, height=700)
 
 fig3.update_traces(textposition='inside', textinfo='percent+label'
                    , hovertemplate='Total tests: %{value} <br>Recent data available date,' +
@@ -179,28 +179,39 @@ fig4 = px.choropleth(recent_death_rate_data_frame, color='iso_code', locations='
                              'covid19_death_rate': 'COVID-19 Death rate(%)'},
                      scope="europe", color_discrete_map=color_dict)
 fig4.update_geos(fitbounds="locations", lataxis_showgrid=True, lonaxis_showgrid=True)
-fig4.update_layout(height=800, title='Task 4: Choropleth map of Europe.')
+fig4.update_layout(height=700, title='Task 4: Choropleth map of Europe.')
 # Task 4 from the concept paper End.
 
 # Dash code start.
-colors = {
-    'background': '#111111',
-    'text': '#7FDBFF'
-}
-
-app.layout = html.Div(style={'backgroundColor': colors['background']}, children=[
+app.layout = html.Div([
     html.H1(
         children='COVID-19 mini project for Interactive Data Visualization course.',
         style={
-            'textAlign': 'center',
-            'color': colors['text']
-        }
+            'textAlign': 'center'}
     ),
-    dcc.Graph(id='line-graph', figure=fig1),
-    dcc.Graph(id='parallel-coordinates', figure=fig2),
-    dcc.Graph(id='pie-chart', figure=fig3),
-    dcc.Graph(id='choropleth-map', figure=fig4)
+    dcc.Tabs(id="tabs", value="tab-1", children=[
+        dcc.Tab(label='Line graph', value='tab-1'),
+        dcc.Tab(label='Parallel co-ordinates plot', value='tab-2'),
+        dcc.Tab(label='Pie chart', value='tab-3'),
+        dcc.Tab(label='Choropleth Map', value='tab-4')
+    ]),
+    html.Div(id="tabs-content")
 ])
+
+
+@app.callback(Output('tabs-content', 'children'),
+              [Input('tabs', 'value')])
+def render_content(tab):
+    if tab == 'tab-1':
+        return html.Div([dcc.Graph(id='line-graph', figure=fig1)])
+    elif tab == 'tab-2':
+        return html.Div([dcc.Graph(id='parallel-coordinates', figure=fig2)])
+    elif tab == 'tab-3':
+        return html.Div([dcc.Graph(id='pie-chart', figure=fig3)])
+    else:
+        return html.Div([dcc.Graph(id='choropleth-map', figure=fig4)])
+
+
 if __name__ == '__main__':
     app.run_server(debug=True)
 # Dash code end.
