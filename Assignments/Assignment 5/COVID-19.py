@@ -214,4 +214,6 @@ def render_content(tab):
 
 if __name__ == '__main__':
     app.run_server(debug=True)
+
+# To view the dash output just open the link http://127.0.0.1:8050/ in the browser
 # Dash code end.
