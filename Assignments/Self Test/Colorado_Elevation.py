@@ -13,15 +13,15 @@ with open('colorado_elev.vit',"rb") as f:
 #Display Dataset
 print("***Dataset values Start***")
 data = [d for d in dataSet]
-#print(data)   #In readable format
+# print(data)   #In readable format
 print(len(data))
 print("***Dataset values End***")
 
 print("***Header Start***")
 #Extract and display header data from dataset
 header = dataSet[0:268]
-#headerValues = [h for h in header]     #In readable format
-#print(headerValues)
+headerValues = [h for h in header]     #In readable format
+print(headerValues)
 print(len(header))
 print("***Header End***")
 
