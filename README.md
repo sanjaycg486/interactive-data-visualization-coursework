@@ -1,6 +1,6 @@
 # Interactive data visualization
 
-It is the archive for my assignments to the Master Course "Interactive Data Visualization" (SS 2020) Prof. Dr. Gitta Domik-Kienegger at Paderborn University, Germany.
+It is the archive for my assignments to the Master Course "Interactive Data Visualization" (SS 2020) by Prof. Dr. Gitta Domik-Kienegger at Paderborn University, Germany.
 
 Programming language - Python 3.
 
