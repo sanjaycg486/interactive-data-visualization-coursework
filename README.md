@@ -132,16 +132,23 @@ Mean = 949.99 and Variance = 134932.48
 
 ## Assignment 4
 
-**Task:** [Effective visual identification of quickest and slowest movements of water particles in a channel due to wind forces.](Assignment_1\ass1_sheet.pdf)
+[Assignment_4 Description](Assignment_4\ass4_sheet.pdf).
+
+**Task:** (a) Visualize given data with a scatterplot matrix. 
 
 **Output:**
 
-![Output for Assignment 1](Assignment_1\FlowData.png)
+![Output for scatterplot plot](Assignment_4\ScatterplotMatrix.png)
+
+**Task:** (b) Visualize given data with parallel coordinates. 
+
+**Output:**
+
+![Output for parallel coordinates](Assignment_4\ParallelCoordinates.png)
 
 **Feedback:**
-1. Points: 5/10.
-2. Use of color is incorrect, false information is conveyed.
-3. Flow direction is not clear cause of areas with too small arrows and areas with too much overlapping
+1. Points: 4.5/5.
+2. Legend not labelled thus reducing effectiveness for parallel coordinates.
 
 ## How to Run
 
