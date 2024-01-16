@@ -10,13 +10,14 @@ This is the archive for my assignments to the Master Course [Interactive Data Vi
 2. [Assignment 2](#assignment-2)
 3. [Assignment 3](#assignment-3)
 4. [Assignment 4](#assignment-4)
-5. [Assignment 5](#assignment-5)
-6. [How To Run](#how-to-run)
-7. [License](#license)
+5. [How To Run](#how-to-run)
+6. [License](#license)
 
 ## Assignment 1
 
-**Task:** [Effective visual identification of quickest and slowest movements of water particles in a channel due to wind forces.](Assignment_1\ass1_sheet.pdf)
+[Assignment_1 Description](Assignment_1\ass1_sheet.pdf).
+
+**Task:** Effective visual identification of quickest and slowest movements of water particles in a channel due to wind forces.
 
 **Output:**
 
@@ -29,19 +30,79 @@ This is the archive for my assignments to the Master Course [Interactive Data Vi
 
 ## Assignment 2
 
-Description of Assignment 2.
+[Assignment_2 Description](Assignment_2\ass2_sheet.pdf).
+
+**Task:** (a) Draw a profile line through line 256 of this 2D data set. 
+
+**Output:**
+
+![Output for profile line](Assignment_2\Profileline.png)
+
+**Task:** (b) Calculate the mean and the variance value of this 2D data set.
+
+**Output:**
+Mean = 949.99 and Variance = 134932.48
+
+**Task:** (c) Display a histogram of this 2D data set.
+
+**Output:**
+
+![Output for histogram](Assignment_2\Histogram.png)
+
+**Task:** (d) Rescale values to range between 0 and 255 using a linear transformation.
+
+**Output:**
+
+![Output for linear transformation](Assignment_2\LinearTransformation.png)
+
+**Task:** (e) Rescale values to range between 0 and 255 using a different (e.g. non-linear) transformation.
+
+**Output:**
+
+![Output for non-linear transformation](Assignment_2\Non-LinearTransformation.png)
+
+**Task:** (f) Use an 11x11 boxcar smoothing filter on the 2D data set.
+
+**Output:**
+
+![Output for boxcar smoothing filter](Assignment_2\BoxcarSmoothingFilter.png)
+
+**Task:** (g) Use an 11x11 median filter on the 2D data set.
+
+**Output:**
+
+![Output for median filter](Assignment_2\MedianFilter.png)
+
+**Feedback:**
+1. Points: 8.75/10.
+2. Axis title of profile line incorrect.
+3. Histogram is incorrect.
 
 ## Assignment 3
 
-Description of Assignment 3.
+**Task:** [Effective visual identification of quickest and slowest movements of water particles in a channel due to wind forces.](Assignment_1\ass1_sheet.pdf)
+
+**Output:**
+
+![Output for Assignment 1](Assignment_1\FlowData.png)
+
+**Feedback:**
+1. Points: 5/10.
+2. Use of color is incorrect, false information is conveyed.
+3. Flow direction is not clear cause of areas with too small arrows and areas with too much overlapping
 
 ## Assignment 4
 
-Description of Assignment 4.
+**Task:** [Effective visual identification of quickest and slowest movements of water particles in a channel due to wind forces.](Assignment_1\ass1_sheet.pdf)
 
-## Assignment 5
+**Output:**
 
-Description of Assignment 5.
+![Output for Assignment 1](Assignment_1\FlowData.png)
+
+**Feedback:**
+1. Points: 5/10.
+2. Use of color is incorrect, false information is conveyed.
+3. Flow direction is not clear cause of areas with too small arrows and areas with too much overlapping
 
 ## How to Run
 
