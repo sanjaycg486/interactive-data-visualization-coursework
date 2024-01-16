@@ -1,4 +1,4 @@
-# Interactive Data Visualization Course
+# Interactive Data Visualization Coursework
 
 [![Python](https://img.shields.io/badge/Python-3.11.7-%233776AB?logo=Python)](https://www.python.org/)
 [![plotly](https://img.shields.io/badge/Plotly-5.18.0-%233776AB?logo=Plotly)](https://pypi.org/project/plotly/5.9.0/)
@@ -10,7 +10,7 @@
 
 This is the archive for my assignments to the Master Course [Interactive Data Visualization (SS 2020)](https://cs.uni-paderborn.de/en/cgvb/lehre/vergangene-semester/ss-20/interactive-data-visualization) by Prof. Dr. Gitta Domik-Kienegger at [Paderborn University](https://www.uni-paderborn.de/en/), Germany.
 
-**Note:** The assignment sheets include proprietary material owned by Sabrina Piasecki, [Paderborn University](https://www.uni-paderborn.de/en/), Germany. And please don't share.
+**Note:** The assignment sheets include proprietary material owned by Sabrina Piasecki, [Paderborn University](https://www.uni-paderborn.de/en/), Germany. Dataset is not provided in the reposiory.
 
 ## Table of Contents
 
@@ -39,6 +39,8 @@ This is the archive for my assignments to the Master Course [Interactive Data Vi
 ## Assignment 2
 
 [Assignment_2 Description](Assignment_2/ass2_sheet.pdf).
+
+**Note:** The plot will be generated one after the other.
 
 **Task:** (a) Draw a profile line through line 256 of this 2D data set. 
 
@@ -89,6 +91,8 @@ Mean = 949.99 and Variance = 134932.48
 ## Assignment 3
 
 [Assignment_3 Description](Assignment_3/ass3_sheet.pdf).
+
+**Note:** The plot will be generated one after the other.
 
 **Task:** (a) Calculate the max value, the min value, the mean value and the variance value of this 2D data set.
 
