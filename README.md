@@ -23,13 +23,13 @@ This is the archive for my assignments to the Master Course [Interactive Data Vi
 
 ## Assignment 1
 
-[Assignment_1 Description](Assignment_1\ass1_sheet.pdf).
+[Assignment_1 Description](Assignment_1/ass1_sheet.pdf).
 
 **Task:** Effective visual identification of quickest and slowest movements of water particles in a channel due to wind forces.
 
 **Output:**
 
-![Output for Assignment 1](Assignment_1\FlowData.png)
+![Output for Assignment 1](Assignment_1/FlowData.png)
 
 **Feedback:**
 1. Points: 5/10.
@@ -38,13 +38,13 @@ This is the archive for my assignments to the Master Course [Interactive Data Vi
 
 ## Assignment 2
 
-[Assignment_2 Description](Assignment_2\ass2_sheet.pdf).
+[Assignment_2 Description](Assignment_2/ass2_sheet.pdf).
 
 **Task:** (a) Draw a profile line through line 256 of this 2D data set. 
 
 **Output:**
 
-![Output for profile line](Assignment_2\Profileline.png)
+![Output for profile line](Assignment_2/Profileline.png)
 
 **Task:** (b) Calculate the mean and the variance value of this 2D data set.
 
@@ -55,31 +55,31 @@ Mean = 949.99 and Variance = 134932.48
 
 **Output:**
 
-![Output for histogram](Assignment_2\Histogram.png)
+![Output for histogram](Assignment_2/Histogram.png)
 
 **Task:** (d) Rescale values to range between 0 and 255 using a linear transformation.
 
 **Output:**
 
-![Output for linear transformation](Assignment_2\LinearTransformation.png)
+![Output for linear transformation](Assignment_2/LinearTransformation.png)
 
 **Task:** (e) Rescale values to range between 0 and 255 using a different (e.g. non-linear) transformation.
 
 **Output:**
 
-![Output for non-linear transformation](Assignment_2\Non-LinearTransformation.png)
+![Output for non-linear transformation](Assignment_2/Non-LinearTransformation.png)
 
 **Task:** (f) Use an 11x11 boxcar smoothing filter on the 2D data set.
 
 **Output:**
 
-![Output for boxcar smoothing filter](Assignment_2\BoxcarSmoothingFilter.png)
+![Output for boxcar smoothing filter](Assignment_2/BoxcarSmoothingFilter.png)
 
 **Task:** (g) Use an 11x11 median filter on the 2D data set.
 
 **Output:**
 
-![Output for median filter](Assignment_2\MedianFilter.png)
+![Output for median filter](Assignment_2/MedianFilter.png)
 
 **Feedback:**
 1. Points: 8.75/10.
@@ -88,7 +88,7 @@ Mean = 949.99 and Variance = 134932.48
 
 ## Assignment 3
 
-[Assignment_3 Description](Assignment_3\ass3_sheet.pdf).
+[Assignment_3 Description](Assignment_3/ass3_sheet.pdf).
 
 **Task:** (a) Calculate the max value, the min value, the mean value and the variance value of this 2D data set.
 
@@ -98,19 +98,19 @@ Mean = 949.99 and Variance = 134932.48
 
 **Output:**
 
-![Output for ProfileLine](Assignment_3\ProfileLine.png)
+![Output for ProfileLine](Assignment_3/ProfileLine.png)
 
 **Task:** (c) Display a histogram of this 2D data set.
 
 **Output:**
 
-![Output for histogram](Assignment_3\Histogram.png)
+![Output for histogram](Assignment_3/Histogram.png)
 
 **Task:** (d) Rescale values to range between 0 and 255 using your own transformation and display on your screen. Add a legend showing the new maximum and minimum value.
 
 **Output:**
 
-![Output for transformation](Assignment_3\Transformation.png)
+![Output for transformation](Assignment_3/Transformation.png)
 
 **Task:** (e) Carry out a Histogram equalization on each of the four bands and display on your screen.
 
@@ -130,7 +130,7 @@ Mean = 949.99 and Variance = 134932.48
 
 **Output:**
 
-![Output for RGB_image](Assignment_3\RGB_image.png)
+![Output for RGB_image](Assignment_3/RGB_image.png)
 
 **Feedback:**
 1. Points: 12.50/15.
@@ -140,19 +140,19 @@ Mean = 949.99 and Variance = 134932.48
 
 ## Assignment 4
 
-[Assignment_4 Description](Assignment_4\ass4_sheet.pdf).
+[Assignment_4 Description](Assignment_4/ass4_sheet.pdf).
 
 **Task:** (a) Visualize given data with a scatterplot matrix. 
 
 **Output:**
 
-![Output for scatterplot plot](Assignment_4\ScatterplotMatrix.png)
+![Output for scatterplot plot](Assignment_4/ScatterplotMatrix.png)
 
 **Task:** (b) Visualize given data with parallel coordinates. 
 
 **Output:**
 
-![Output for parallel coordinates](Assignment_4\ParallelCoordinates.png)
+![Output for parallel coordinates](Assignment_4/ParallelCoordinates.png)
 
 **Feedback:**
 1. Points: 4.5/5.
