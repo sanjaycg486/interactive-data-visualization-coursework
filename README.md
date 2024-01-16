@@ -2,7 +2,7 @@
 
 This is the archive for my assignments to the Master Course [Interactive Data Visualization (SS 2020)](https://cs.uni-paderborn.de/en/cgvb/lehre/vergangene-semester/ss-20/interactive-data-visualization) by Prof. Dr. Gitta Domik-Kienegger at [Paderborn University](https://www.uni-paderborn.de/en/), Germany.
 
-**Note:** The assignment sheets include proprietary material owned by Prof. Sabrina Piasecki, [Paderborn University](https://www.uni-paderborn.de/en/), Germany. And please don't share.
+**Note:** The assignment sheets include proprietary material owned by Sabrina Piasecki, [Paderborn University](https://www.uni-paderborn.de/en/), Germany. And please don't share.
 
 ## Table of Contents
 
@@ -80,16 +80,55 @@ Mean = 949.99 and Variance = 134932.48
 
 ## Assignment 3
 
-**Task:** [Effective visual identification of quickest and slowest movements of water particles in a channel due to wind forces.](Assignment_1\ass1_sheet.pdf)
+[Assignment_3 Description](Assignment_3\ass3_sheet.pdf).
+
+**Task:** (a) Calculate the max value, the min value, the mean value and the variance value of this 2D data set.
+
+**Output:** Maximum value = 17092.306826, Minimum value = 1.71122371, Mean value = 7.341425385031528, and Variance value = 15761.151027464939.
+
+**Task:** (b) Draw a profile line through the line with the maximum value of this 2D data set.
 
 **Output:**
 
-![Output for Assignment 1](Assignment_1\FlowData.png)
+![Output for ProfileLine](Assignment_3\ProfileLine.png)
+
+**Task:** (c) Display a histogram of this 2D data set.
+
+**Output:**
+
+![Output for histogram](Assignment_3\Histogram.png)
+
+**Task:** (d) Rescale values to range between 0 and 255 using your own transformation and display on your screen. Add a legend showing the new maximum and minimum value.
+
+**Output:**
+
+![Output for transformation](Assignment_3\Transformation.png)
+
+**Task:** (e) Carry out a Histogram equalization on each of the four bands and display on your screen.
+
+**Output:**
+<table>
+  <tr>
+    <td><img src="Assignment_3/HistogramEqualization_Band1.png" alt="Image 1" width="300"/></td>
+    <td><img src="Assignment_3/HistogramEqualization_Band2.png" alt="Image 2" width="300"/></td>
+  </tr>
+  <tr>
+    <td><img src="Assignment_3/HistogramEqualization_Band3.png" alt="Image 3" width="300"/></td>
+    <td><img src="Assignment_3/HistogramEqualization_Band4.png" alt="Image 4" width="300"/></td>
+  </tr>
+</table>
+
+**Task:** (f) Combine the histo-equalized data set to an RGB-image (b4=r, b3=g, b1=b).
+
+**Output:**
+
+![Output for RGB_image](Assignment_3\RGB_image.png)
 
 **Feedback:**
-1. Points: 5/10.
-2. Use of color is incorrect, false information is conveyed.
-3. Flow direction is not clear cause of areas with too small arrows and areas with too much overlapping
+1. Points: 12.50/15.
+2. Log scale not used in profile line.
+3. Histogram incorrect.
+4. Legend missing in subtask (e).
 
 ## Assignment 4
 
