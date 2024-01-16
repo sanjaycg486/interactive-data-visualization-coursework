@@ -1,5 +1,13 @@
 # Interactive Data Visualization Course
 
+[![Python](https://img.shields.io/badge/Python-3.11.7-%233776AB?logo=Python)](https://www.python.org/)
+[![plotly](https://img.shields.io/badge/Plotly-5.18.0-%233776AB?logo=Plotly)](https://pypi.org/project/plotly/5.9.0/)
+[![pandas](https://img.shields.io/badge/Pandas-2.1.4-%233776AB?logo=pandas)](https://pypi.org/project/pandas/)
+[![numpy](https://img.shields.io/badge/Numpy-1.26.3-%233776AB?logo=numpy)](https://pypi.org/project/numpy/)
+[![matplotlib](https://img.shields.io/badge/matplotlib-3.8.0-%233776AB)](https://pypi.org/project/matplotlib/3.8.0/)
+![GitHub last commit](https://img.shields.io/github/last-commit/sanjaycg486/COVID-19?logo=github)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 This is the archive for my assignments to the Master Course [Interactive Data Visualization (SS 2020)](https://cs.uni-paderborn.de/en/cgvb/lehre/vergangene-semester/ss-20/interactive-data-visualization) by Prof. Dr. Gitta Domik-Kienegger at [Paderborn University](https://www.uni-paderborn.de/en/), Germany.
 
 **Note:** The assignment sheets include proprietary material owned by Sabrina Piasecki, [Paderborn University](https://www.uni-paderborn.de/en/), Germany. And please don't share.
@@ -109,12 +117,12 @@ Mean = 949.99 and Variance = 134932.48
 **Output:**
 <table>
   <tr>
-    <td><img src="Assignment_3/HistogramEqualization_Band1.png" alt="Image 1" width="300"/></td>
-    <td><img src="Assignment_3/HistogramEqualization_Band2.png" alt="Image 2" width="300"/></td>
+    <td><img src="Assignment_3/HistogramEqualization_Band1.png" alt="Image 1" width="400"/></td>
+    <td><img src="Assignment_3/HistogramEqualization_Band2.png" alt="Image 2" width="400"/></td>
   </tr>
   <tr>
-    <td><img src="Assignment_3/HistogramEqualization_Band3.png" alt="Image 3" width="300"/></td>
-    <td><img src="Assignment_3/HistogramEqualization_Band4.png" alt="Image 4" width="300"/></td>
+    <td><img src="Assignment_3/HistogramEqualization_Band3.png" alt="Image 3" width="400"/></td>
+    <td><img src="Assignment_3/HistogramEqualization_Band4.png" alt="Image 4" width="400"/></td>
   </tr>
 </table>
 
@@ -152,34 +160,42 @@ Mean = 949.99 and Variance = 134932.48
 
 ## How to Run
 
-This project uses Conda for managing environments and dependencies. The [`environment.yaml`](environment.yml) file contains the list of all dependencies needed to run the project.
+This assignment uses Conda for managing environments and dependencies. The [`environment.yml`](environment.yml) file contains the list of all dependencies needed to run the all the assignments.
 
 Follow these steps to run the project:
 
 1. **Install Conda**: If you haven't installed Conda yet, you can download it from [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html). Follow the instructions for your specific operating system.
 
-2. **Create a Conda environment**: Navigate to the project directory in your terminal and run the following command to create a new Conda environment based on the [`environment.yaml`](environment.yml) file:
+2. **Create a Conda environment**: Navigate to the project directory in your terminal and run the following command to create a new Conda environment based on the [`environment.yml`](environment.yml) file:
 
     ```bash
-    conda env create -f environment.yaml
+    conda env create -f environment.yml
     ```
 
-    This will create a new Conda environment with the name specified in the [`environment.yaml`](environment.yml) file.
+    This will create a new Conda environment with the name specified in the [`environment.yml`](environment.yml) file.
 
 3. **Activate the Conda environment**: Use the following command to activate the newly created environment:
 
     ```bash
-    conda activate covid-19
+    conda activate idv-coursework
     ```    
 
-4. **Run the project**: Now that the environment is set up and activated, you can run the project. If it's a Python script, use the following command:
+4. **Run the Assignment**: Now that the environment is set up and activated, you can run the **indiviual assignment**. If it's a Python script, use the following command:
 
     ```bash
-    python COVID-19.py
-    ```    
-
+    Assignment_1>python FlowData.py
+    ```
+    ```bash
+    Assignment_2>python Angiographic.py
+    ```
+    ```bash
+    Assignment_3>python Equalization.py
+    ```
+    ```bash
+    Assignment_4>python Weierstrass-Prize.py
+    ```
 Remember to deactivate the Conda environment once you're done by using the `conda deactivate` command.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](License) file for details
