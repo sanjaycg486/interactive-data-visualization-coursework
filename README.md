@@ -5,7 +5,7 @@
 [![pandas](https://img.shields.io/badge/Pandas-2.1.4-%233776AB?logo=pandas)](https://pypi.org/project/pandas/)
 [![numpy](https://img.shields.io/badge/Numpy-1.26.3-%233776AB?logo=numpy)](https://pypi.org/project/numpy/)
 [![matplotlib](https://img.shields.io/badge/matplotlib-3.8.0-%233776AB)](https://pypi.org/project/matplotlib/3.8.0/)
-![GitHub last commit](https://img.shields.io/github/last-commit/sanjaycg486/COVID-19?logo=github)
+![GitHub last commit](https://img.shields.io/github/last-commit/sanjaycg486/interactive-data-visualization-coursework?logo=github)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 This is the archive for my assignments to the Master Course [Interactive Data Visualization (SS 2020)](https://cs.uni-paderborn.de/en/cgvb/lehre/vergangene-semester/ss-20/interactive-data-visualization) by Prof. Dr. Gitta Domik-Kienegger at [Paderborn University](https://www.uni-paderborn.de/en/), Germany.
